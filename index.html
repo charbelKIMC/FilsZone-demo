@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>FilsZone · Démo</title>
+    <meta name="description" content="Démonstration d'une plateforme de vente de tickets Wi-Fi : forfaits, tickets, portail client et suivi des connexions.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230b7a75'/%3E%3Cpath d='M6 11.5a8.5 8.5 0 0 1 12 0M8.5 14.5a5 5 0 0 1 7 0' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='18' r='1.4' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin/admin.css">
+    <style>
+        .home-card { width: min(520px, 100%); }
+        .home-card ol { margin: 0 0 24px; padding-left: 20px; display: grid; gap: 8px; }
+        .home-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .home-note { margin-top: 18px; text-align: center; }
+        @media (max-width: 420px) { .home-actions { grid-template-columns: 1fr; } }
+    </style>
+</head>
+
+<body>
+    <main class="login-screen">
+        <div class="card login-card home-card">
+            <div class="login-logo has-logo" data-logo="page"><img src="assets/logo.png" alt="FilsZone"></div>
+            <h1>FilsZone</h1>
+            <p class="muted">Démonstration d'une plateforme de vente de tickets Wi-Fi</p>
+
+            <ol>
+                <li>Ouvrez l'<b>administration</b> (le compte de démo est pré-rempli) et générez un ticket.</li>
+                <li>Ouvrez le <b>portail client</b> et connectez-vous avec l'identifiant et le mot de passe du ticket.</li>
+                <li>Simulez une consommation et suivez-la des deux côtés.</li>
+            </ol>
+
+            <div class="home-actions">
+                <a class="btn" href="admin/">Administration</a>
+                <a class="btn btn-ghost" href="user/">Portail client</a>
+            </div>
+            <p class="muted small home-note">
+                Les données sont fictives et restent dans votre navigateur : chaque visiteur a sa propre démo.
+            </p>
+        </div>
+    </main>
+</body>
+
+</html>

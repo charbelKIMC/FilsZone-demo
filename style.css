@@ -1,0 +1,208 @@
+/* ============================================================
+   Wi-Fi zone : styles communs (admin + client)
+   ============================================================ */
+:root {
+    --bg: #f4f6f8;
+    --surface: #ffffff;
+    --surface-2: #f8fafb;
+    --tx: #1d2733;
+    --mut: #6b7785;
+    --bd: #dde3e9;
+    --pri: #0b7a75;
+    --pri-strong: #08605c;
+    --pri-soft: #e3f2f1;
+    --on-pri: #ffffff;
+    --ok: #067647;
+    --ok-soft: #e3f4ea;
+    --warn: #b54708;
+    --warn-soft: #fdf0e2;
+    --err: #b42318;
+    --err-soft: #fdecea;
+    --info: #175cd3;
+    --info-soft: #e8f0fd;
+    --radius: 14px;
+    --radius-sm: 5px;
+    --shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 2px 6px rgba(16, 24, 40, .06);
+    --shadow-lg: 0 18px 48px rgba(16, 24, 40, .22);
+    --mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #12181f;
+        --surface: #1b232c;
+        --surface-2: #161d25;
+        --tx: #e8edf2;
+        --mut: #9aa7b4;
+        --bd: #2c3742;
+        --pri: #2bb3aa;
+        --pri-strong: #5fd0c8;
+        --pri-soft: #173a39;
+        --on-pri: #06201f;
+        --ok: #47cd89;
+        --ok-soft: #123326;
+        --warn: #f5a54a;
+        --warn-soft: #3a2a14;
+        --err: #f97066;
+        --err-soft: #3d1a18;
+        --info: #7cb1ff;
+        --info-soft: #172a47;
+        --shadow: 0 1px 2px rgba(0, 0, 0, .3);
+        --shadow-lg: 0 18px 48px rgba(0, 0, 0, .55);
+        color-scheme: dark;
+    }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--surface); color: var(--tx); }
+[hidden] { display: none !important; }
+h1, h2, h3 { margin: 0; line-height: 1.25; }
+h1 { font-size: 24px; }
+h2 { font-size: 18px; }
+h3 { font-size: 15px; }
+p { margin: 0; }
+a { color: var(--pri); }
+code, .mono { font-family: var(--mono); font-size: .95em; letter-spacing: .02em; }
+.muted { color: var(--mut); }
+.small { font-size: 13px; }
+.icon { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; }
+
+/* ---------- Cartes ---------- */
+.card { background: var(--surface); border: 1px solid var(--bd); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+
+/* ---------- Boutons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border: 1px solid transparent; border-radius: var(--radius-sm); background: var(--pri); color: var(--on-pri); font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; transition: background .15s, border-color .15s, opacity .15s; white-space: nowrap; }
+.btn:hover { background: var(--pri-strong); }
+.btn:focus-visible, input:focus-visible, select:focus-visible, .seg button:focus-visible, .nav a:focus-visible { outline: 3px solid color-mix(in srgb, var(--pri) 45%, transparent); outline-offset: 2px; }
+.btn:disabled { opacity: .55; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--tx); border-color: var(--bd); }
+.btn-ghost:hover { background: var(--surface-2); border-color: var(--mut); }
+.btn-danger { background: var(--err); color: #fff; }
+.btn-danger:hover { background: color-mix(in srgb, var(--err) 85%, #000); }
+.btn-ghost.danger { color: var(--err); }
+.btn-sm { padding: 6px 11px; font-size: 13px; }
+.btn-block { width: 100%; }
+.btn.is-busy { position: relative; color: transparent !important; pointer-events: none; }
+.btn.is-busy::after { content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid var(--on-pri); border-right-color: transparent; border-radius: 50%; animation: spin .7s linear infinite; }
+.btn-ghost.is-busy::after { border-color: var(--tx); border-right-color: transparent; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Formulaires ---------- */
+.field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+.field label { font-size: 13px; font-weight: 600; color: var(--mut); }
+.field .hint { font-size: 12px; color: var(--mut); }
+input, select { width: 100%; padding: 10px 12px; border: 1px solid var(--bd); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--tx); font: inherit; }
+input:focus, select:focus { outline: none; }
+input:disabled { opacity: .6; }
+.input-icon { position: relative; }
+.input-icon .icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--mut); pointer-events: none; }
+.input-icon input { padding-left: 36px; }
+.input-action { position: relative; }
+.input-action input { padding-right: 44px; }
+.input-action button { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); border: 0; background: none; color: var(--mut); padding: 6px 8px; cursor: pointer; border-radius: 6px; }
+.input-action button:hover { color: var(--tx); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+.form-grid .full { grid-column: 1 / -1; }
+
+/* ---------- Alertes ---------- */
+.alert { display: flex; gap: 10px; align-items: flex-start; padding: 11px 14px; border-radius: var(--radius-sm); font-size: 14px; margin-bottom: 14px; background: var(--err-soft); color: var(--err); }
+.alert.ok { background: var(--ok-soft); color: var(--ok); }
+.alert.warn { background: var(--warn-soft); color: var(--warn); }
+.alert.info { background: var(--info-soft); color: var(--info); }
+.alert .icon { margin-top: 1px; }
+
+/* ---------- Badges ---------- */
+.badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--surface-2); color: var(--mut); border: 1px solid var(--bd); white-space: nowrap; }
+.badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge.ok { background: var(--ok-soft); color: var(--ok); border-color: transparent; }
+.badge.warn { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+.badge.err { background: var(--err-soft); color: var(--err); border-color: transparent; }
+.badge.info { background: var(--info-soft); color: var(--info); border-color: transparent; }
+
+/* ---------- Jauges ---------- */
+.meter { height: 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--bd); overflow: hidden; }
+.meter > span { display: block; height: 100%; width: 0; background: var(--pri); border-radius: inherit; transition: width .6s ease, background .3s; }
+.meter.warn > span { background: var(--warn); }
+.meter.err > span { background: var(--err); }
+.meter.sm { height: 5px; width: 80px; }
+
+/* ---------- Tableaux ---------- */
+.table-wrap { overflow-x: auto; margin: 0 -20px; padding: 0 20px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--bd); font-size: 14px; white-space: nowrap; vertical-align: middle; }
+th { color: var(--mut); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; background: var(--surface-2); }
+tbody tr:hover { background: var(--surface-2); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.actions { text-align: right; }
+.is-loading { opacity: .55; transition: opacity .2s; pointer-events: none; }
+
+.empty { text-align: center; padding: 36px 16px; color: var(--mut); }
+.empty .icon { width: 34px; height: 34px; margin-bottom: 8px; opacity: .6; }
+
+/* ---------- Pagination ---------- */
+.pager { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; font-size: 13px; color: var(--mut); flex-wrap: wrap; }
+.pager div { display: flex; gap: 6px; }
+
+/* ---------- Contrôle segmenté ---------- */
+.seg { display: inline-flex; background: var(--surface-2); border: 1px solid var(--bd); border-radius: var(--radius-sm); padding: 3px; gap: 2px; flex-wrap: wrap; }
+.seg button { border: 0; background: none; color: var(--mut); font: inherit; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+.seg button:hover { color: var(--tx); }
+.seg button.active { background: var(--surface); color: var(--tx); box-shadow: var(--shadow); }
+
+/* ---------- Fenêtres (dialog) ---------- */
+dialog { border: 0; padding: 0; border-radius: var(--radius); background: var(--surface); color: var(--tx); box-shadow: var(--shadow-lg); width: min(520px, calc(100vw - 32px)); max-height: calc(100vh - 32px); }
+dialog.wide { width: min(760px, calc(100vw - 32px)); }
+dialog::backdrop { background: rgba(10, 16, 22, .55); backdrop-filter: blur(2px); }
+dialog[open] { animation: pop .18s ease-out; }
+@keyframes pop { from { transform: translateY(8px) scale(.98); opacity: 0; } }
+.dialog-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 0; }
+.dialog-body { padding: 16px 20px; }
+.dialog-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 0 20px 20px; flex-wrap: wrap; }
+.icon-btn { border: 0; background: none; color: var(--surface-2); padding: 6px; border-radius: 8px; cursor: pointer; display: inline-flex; }
+.icon-btn:hover { background: var(--surface-2); color: var(--tx); }
+
+/* ---------- Notifications ---------- */
+#toasts { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 100; width: min(420px, calc(100vw - 32px)); pointer-events: none; }
+.toast { display: flex; gap: 10px; align-items: center; padding: 12px 16px; border-radius: var(--radius-sm); color: #fff; background: var(--err); box-shadow: var(--shadow-lg); font-size: 14px; animation: pop .2s ease-out; pointer-events: auto; }
+.toast.ok { background: var(--ok); }
+.toast.info { background: var(--tx); color: var(--bg); }
+@media (prefers-color-scheme: dark) { .toast, .toast.ok { color: #0b1015; } }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* ---------- Bandeau de la démo (voir js/demo-banner.js) ---------- */
+:root { --demo-bar-h: 40px; }
+.demo-bar { min-height: var(--demo-bar-h); display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; padding: 4px 16px; background: var(--info-soft); color: var(--info); font-size: 13px; text-align: center; }
+.demo-bar .btn { padding: 3px 10px; }
+/* Les écrans pleine hauteur gardent leur taille sous le bandeau */
+body:has(.demo-bar) .login-screen, body:has(.demo-bar) .shell { min-height: calc(100vh - var(--demo-bar-h)); }
+/* Grand écran : le bandeau reste en haut et la barre latérale de l'admin tient sous lui (bouton de déconnexion visible) */
+@media (min-width: 861px) {
+    .demo-bar { position: sticky; top: 0; z-index: 20; height: var(--demo-bar-h); }
+    body:has(.demo-bar) .sidebar { top: var(--demo-bar-h); height: calc(100vh - var(--demo-bar-h)); }
+}
+
+/* ---------- Impression des tickets (admin) ---------- */
+#print-area { display: none; }
+@media print {
+    @page { margin: 10mm; }
+    body { background: #fff; color: #000; }
+    body > *:not(#print-area) { display: none !important; }
+    #print-area { display: grid !important; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+    .print-ticket { border: 1.5px dashed #555; border-radius: 8px; padding: 4mm; break-inside: avoid; font-size: 11px; color: #000; }
+    .print-ticket .pt-zone { font-weight: 700; font-size: 12px; display: flex; align-items: center; gap: 2mm; }
+    .print-ticket .pt-logo { height: 7mm; width: auto; }
+    .print-ticket .pt-forfait { margin: 1mm 0 2mm; color: #333; }
+    .print-ticket .pt-codes { border-top: 1px solid #ccc; padding-top: 2mm; display: grid; grid-template-columns: auto 1fr; gap: 1mm 3mm; }
+    .print-ticket .pt-codes b { font-family: var(--mono); font-size: 15px; letter-spacing: .08em; }
+    .print-ticket .pt-help { margin-top: 2mm; font-size: 9px; color: #444; }
+}
+
+/* ---------- Logos de la zone (voir CONFIG.zone.logos) ---------- */
+[data-logo].has-logo { display: block; background: none; width: auto; border-radius: 0; }
+[data-logo].has-logo img { display: block; height: 100%; width: auto; max-width: 180px; margin-inline: auto; object-fit: contain; }

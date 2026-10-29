@@ -1,0 +1,9 @@
+# Réglages d'éditeur, propres à chaque développeur
+.vscode/
+.idea/
+.claude/
+
+# Fichiers parasites de Windows et macOS
+Thumbs.db
+desktop.ini
+.DS_Store

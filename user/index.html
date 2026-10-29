@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Connexion · FilsZone</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230b7a75'/%3E%3Cpath d='M6 11.5a8.5 8.5 0 0 1 12 0M8.5 14.5a5 5 0 0 1 7 0' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='18' r='1.4' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="user.css">
+    <script type="module" src="../js/user/main.js"></script>
+    <script type="module" src="../js/demo-banner.js"></script>
+</head>
+
+<body>
+    <!-- ==================== Bandeau ==================== -->
+    <header class="hero">
+        <div class="hero-inner">
+            <div class="hero-brand"><span class="brand-mark" data-logo="header"><i data-icon="wifi"></i></span><span data-zone-nom>FilsZone</span></div>
+            <h1 id="zone-slogan"></h1>
+            <p id="zone-description"></p>
+            <ul class="hero-infos" id="zone-infos"></ul>
+        </div>
+    </header>
+
+    <main class="user-main">
+        <!-- ==================== Connexion ==================== -->
+        <section id="view-login" class="card login-panel" hidden>
+            <h2>Connexion au Wi-Fi</h2>
+            <p class="muted">Saisissez les codes inscrits sur votre ticket.</p>
+            <div id="login-alert" class="alert" role="alert" hidden></div>
+            <form id="login-form" novalidate>
+                <div class="field">
+                    <label for="ticket-id">Identifiant</label>
+                    <input id="ticket-id" class="code-input" maxlength="20" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ex. AB12CD34" required>
+                </div>
+                <div class="field">
+                    <label for="ticket-pass">Mot de passe</label>
+                    <div class="input-action">
+                        <input id="ticket-pass" class="code-input" type="password" maxlength="20" autocomplete="off" autocapitalize="characters" spellcheck="false" required>
+                        <button type="button" data-toggle-password="ticket-pass" aria-label="Afficher le mot de passe"><i data-icon="eye"></i></button>
+                    </div>
+                </div>
+                <button class="btn btn-block" type="submit">Se connecter</button>
+            </form>
+            <p class="device muted small"><i data-icon="devices"></i> Appareil : <code id="device-mac"></code></p>
+        </section>
+
+        <!-- ==================== Récapitulatif (connecté) ==================== -->
+        <section id="view-dash" class="dash" hidden>
+            <div class="card dash-head">
+                <div>
+                    <p class="online"><span class="live-dot"></span> Connecté</p>
+                    <h2 id="d-forfait"></h2>
+                    <p class="muted small">Ticket <code id="d-ident"></code> · <span id="d-statut"></span></p>
+                </div>
+                <button class="btn btn-ghost" id="logout"><i data-icon="logout"></i> Se déconnecter</button>
+            </div>
+
+            <div id="d-alert" class="alert warn" hidden></div>
+
+            <div class="meters">
+                <article class="card meter-card">
+                    <p class="meter-label"><i data-icon="data"></i> Données restantes</p>
+                    <p class="meter-value" id="d-vol"></p>
+                    <div class="meter" id="d-vol-meter"><span></span></div>
+                    <p class="meter-foot muted small" id="d-vol-foot"></p>
+                </article>
+                <article class="card meter-card">
+                    <p class="meter-label"><i data-icon="clock"></i> Temps restant</p>
+                    <p class="meter-value" id="d-time"></p>
+                    <div class="meter" id="d-time-meter"><span></span></div>
+                    <p class="meter-foot muted small" id="d-time-foot"></p>
+                </article>
+            </div>
+
+            <article class="card">
+                <h3 class="recap-title">Récapitulatif de votre forfait</h3>
+                <dl class="recap" id="d-recap"></dl>
+            </article>
+
+            <div class="demo" id="demo" hidden>
+                <span class="muted small">Mode démonstration :</span>
+                <button class="btn btn-ghost btn-sm" id="demo-usage"><i data-icon="zap"></i> Simuler 250 Mo de consommation</button>
+            </div>
+        </section>
+
+        <!-- ==================== Forfaits ==================== -->
+        <section class="offres" aria-labelledby="offres-title">
+            <div class="offres-head">
+                <h2 id="offres-title">Nos forfaits</h2>
+                <p class="muted">Tickets disponibles auprès du gérant de la zone.</p>
+            </div>
+            <div class="offres-grid" id="offres"></div>
+        </section>
+    </main>
+
+    <footer class="user-footer muted small"><span data-zone-nom>FilsZone</span> · <span id="footer-year"></span></footer>
+</body>
+
+</html>

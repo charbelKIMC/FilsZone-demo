@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Administration · FilsZone</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230b7a75'/%3E%3Cpath d='M6 11.5a8.5 8.5 0 0 1 12 0M8.5 14.5a5 5 0 0 1 7 0' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='18' r='1.4' fill='white'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="admin.css">
+    <script type="module" src="../js/admin/main.js"></script>
+    <script type="module" src="../js/demo-banner.js"></script>
+</head>
+
+<body>
+    <!-- ==================== Connexion ==================== -->
+    <main id="login" class="login-screen" hidden>
+        <form id="login-form" class="card login-card" novalidate>
+            <div class="login-logo" data-logo="page"><i data-icon="wifi"></i></div>
+            <h1 data-zone-nom>FilsZone</h1>
+            <p class="muted">Espace administrateur</p>
+            <div id="login-alert" class="alert" role="alert" hidden></div>
+            <div class="field">
+                <label for="login-user">Identifiant</label>
+                <input id="login-user" name="login" autocomplete="username" required autofocus>
+            </div>
+            <div class="field">
+                <label for="login-pass">Mot de passe</label>
+                <div class="input-action">
+                    <input id="login-pass" name="password" type="password" autocomplete="current-password" required>
+                    <button type="button" data-toggle-password="login-pass" aria-label="Afficher le mot de passe"><i data-icon="eye"></i></button>
+                </div>
+            </div>
+            <button class="btn btn-block" type="submit">Se connecter</button>
+        </form>
+    </main>
+
+    <!-- ==================== Application ==================== -->
+    <div id="app" class="shell" hidden>
+        <aside class="sidebar">
+            <div class="brand"><span class="brand-mark" data-logo="header"><i data-icon="wifi"></i></span><span data-zone-nom>FilsZone</span></div>
+            <nav class="nav" aria-label="Navigation principale">
+                <a href="#/tableau-de-bord" title="Tableau de bord"><i data-icon="chart"></i><span class="nav-text">Tableau de bord</span></a>
+                <a href="#/forfaits" title="Forfaits"><i data-icon="tag"></i><span class="nav-text">Forfaits</span></a>
+                <a href="#/tickets" title="Tickets"><i data-icon="ticket"></i><span class="nav-text">Tickets</span></a>
+                <a href="#/connexions" title="Connexions"><i data-icon="devices"></i><span class="nav-text">Connexions</span><span class="nav-badge" data-badge="connexions" hidden></span></a>
+            </nav>
+            <div class="sidebar-foot">
+                <span class="who"><i data-icon="user"></i> <b id="admin-name"></b></span>
+                <button id="logout" class="icon-btn" title="Se déconnecter" aria-label="Se déconnecter"><i data-icon="logout"></i></button>
+            </div>
+        </aside>
+
+        <main class="content">
+            <!-- ---------- Tableau de bord ---------- -->
+            <section id="page-tableau-de-bord" class="page" hidden>
+                <header class="page-head">
+                    <div>
+                        <h1>Tableau de bord</h1>
+                        <p class="muted small" id="dash-updated">Chargement…</p>
+                    </div>
+                    <button class="btn btn-ghost" id="dash-refresh"><i data-icon="refresh"></i> Actualiser</button>
+                </header>
+                <div class="kpis" id="dash-kpis"></div>
+                <div class="dash-grid">
+                    <article class="card">
+                        <div class="card-head">
+                            <h2>Ventes des 7 derniers jours</h2>
+                            <span class="muted small" id="dash-week-total"></span>
+                        </div>
+                        <div class="bars" id="dash-bars"></div>
+                    </article>
+                    <article class="card">
+                        <div class="card-head"><h2>État des tickets</h2></div>
+                        <div id="dash-statuts"></div>
+                    </article>
+                </div>
+                <article class="card">
+                    <div class="card-head"><h2>Performance par forfait</h2></div>
+                    <div class="table-wrap" id="dash-forfaits"></div>
+                </article>
+            </section>
+
+            <!-- ---------- Forfaits ---------- -->
+            <section id="page-forfaits" class="page" hidden>
+                <header class="page-head">
+                    <div>
+                        <h1>Forfaits</h1>
+                        <p class="muted">Les offres proposées à vos clients.</p>
+                    </div>
+                    <button class="btn" id="forfait-new"><i data-icon="plus"></i> Nouveau forfait</button>
+                </header>
+                <div class="plans" id="forfaits-list"></div>
+            </section>
+
+            <!-- ---------- Tickets ---------- -->
+            <section id="page-tickets" class="page" hidden>
+                <header class="page-head">
+                    <div>
+                        <h1>Tickets</h1>
+                        <p class="muted">Générez, recherchez et suivez vos tickets.</p>
+                    </div>
+                    <div class="page-actions">
+                        <button class="btn btn-ghost" id="batch-reopen" hidden><i data-icon="printer"></i> Dernier lot</button>
+                        <button class="btn" id="ticket-generate"><i data-icon="plus"></i> Générer des tickets</button>
+                    </div>
+                </header>
+                <article class="card">
+                    <div class="toolbar">
+                        <div class="input-icon search">
+                            <i data-icon="search"></i>
+                            <input id="ticket-search" type="search" placeholder="Rechercher un identifiant…" autocomplete="off" spellcheck="false" aria-label="Rechercher un ticket">
+                        </div>
+                        <div class="seg" id="ticket-filter" role="group" aria-label="Filtrer par statut">
+                            <button class="active" data-statut="">Tous</button>
+                            <button data-statut="neuf">Neufs</button>
+                            <button data-statut="actif">Actifs</button>
+                            <button data-statut="epuise">Épuisés</button>
+                            <button data-statut="expire">Expirés</button>
+                            <button data-statut="desactive">Désactivés</button>
+                        </div>
+                    </div>
+                    <div id="tickets-table"></div>
+                </article>
+            </section>
+
+            <!-- ---------- Connexions ---------- -->
+            <section id="page-connexions" class="page" hidden>
+                <header class="page-head">
+                    <div>
+                        <h1>Connexions</h1>
+                        <p class="muted">Appareils connectés et historique des sessions.</p>
+                    </div>
+                    <div class="seg" id="session-filter" role="group" aria-label="Type de connexions">
+                        <button class="active" data-en-cours="1">En cours</button>
+                        <button data-en-cours="0">Historique</button>
+                    </div>
+                </header>
+                <article class="card">
+                    <div id="sessions-table"></div>
+                    <p class="muted small live-note" id="sessions-live"><span class="live-dot"></span> Actualisation automatique toutes les 15 secondes</p>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <!-- ==================== Fenêtres ==================== -->
+    <dialog id="forfait-dialog">
+        <form id="forfait-form" novalidate>
+            <div class="dialog-head">
+                <h2 id="forfait-title">Nouveau forfait</h2>
+                <button type="button" class="icon-btn" data-close aria-label="Fermer"><i data-icon="x"></i></button>
+            </div>
+            <div class="dialog-body">
+                <div id="forfait-error" class="alert" role="alert" hidden></div>
+                <div id="forfait-lock" class="alert info" hidden>
+                    <i data-icon="alert"></i>
+                    <span>Ce forfait a déjà des tickets : son volume et sa durée sont verrouillés. Seuls le nom et le prix peuvent changer.</span>
+                </div>
+                <div class="form-grid">
+                    <div class="field full">
+                        <label for="f-nom">Nom</label>
+                        <input id="f-nom" maxlength="50" required placeholder="Ex. 5 Go semaine">
+                    </div>
+                    <div class="field full">
+                        <label for="f-prix">Prix (<span data-devise></span>)</label>
+                        <input id="f-prix" type="number" min="0" step="1" inputmode="numeric" required>
+                    </div>
+                    <div class="field">
+                        <label for="f-volume">Volume (Go)</label>
+                        <input id="f-volume" type="number" min="0.01" step="0.01" inputmode="decimal" placeholder="Illimité">
+                        <span class="hint">Laisser vide = illimité</span>
+                    </div>
+                    <div class="field">
+                        <label for="f-duree">Durée (heures)</label>
+                        <input id="f-duree" type="number" min="1" step="1" inputmode="numeric" placeholder="Sans limite">
+                        <span class="hint">24 = 1 jour · 168 = 1 semaine</span>
+                    </div>
+                </div>
+            </div>
+            <div class="dialog-foot">
+                <button type="button" class="btn btn-ghost" data-close>Annuler</button>
+                <button type="submit" class="btn" id="forfait-submit">Enregistrer</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="generate-dialog">
+        <form id="generate-form" novalidate>
+            <div class="dialog-head">
+                <h2>Générer des tickets</h2>
+                <button type="button" class="icon-btn" data-close aria-label="Fermer"><i data-icon="x"></i></button>
+            </div>
+            <div class="dialog-body">
+                <div id="generate-error" class="alert" role="alert" hidden></div>
+                <div class="field">
+                    <label for="g-forfait">Forfait</label>
+                    <select id="g-forfait" required></select>
+                </div>
+                <div class="field">
+                    <label for="g-quantite">Quantité</label>
+                    <input id="g-quantite" type="number" min="1" max="100" step="1" value="10" inputmode="numeric" required>
+                    <span class="hint">100 tickets maximum par lot</span>
+                </div>
+                <p class="summary" id="g-summary"></p>
+            </div>
+            <div class="dialog-foot">
+                <button type="button" class="btn btn-ghost" data-close>Annuler</button>
+                <button type="submit" class="btn" id="generate-submit">Générer</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="batch-dialog" class="wide">
+        <div class="dialog-head">
+            <div>
+                <h2>Lot généré</h2>
+                <p class="muted small" id="batch-meta"></p>
+            </div>
+            <button type="button" class="icon-btn" data-close aria-label="Fermer"><i data-icon="x"></i></button>
+        </div>
+        <div class="dialog-body">
+            <div class="alert warn"><i data-icon="alert"></i><span>Imprimez ou exportez ce lot maintenant : les mots de passe ne seront plus jamais affichés après le rechargement de la page.</span></div>
+            <div class="batch-grid" id="batch-list"></div>
+        </div>
+        <div class="dialog-foot">
+            <button type="button" class="btn btn-ghost" id="batch-csv"><i data-icon="download"></i> Exporter CSV</button>
+            <button type="button" class="btn" id="batch-print"><i data-icon="printer"></i> Imprimer les tickets</button>
+        </div>
+    </dialog>
+
+    <!-- Rempli juste avant l'impression : seule cette zone est imprimée -->
+    <div id="print-area"></div>
+</body>
+
+</html>
